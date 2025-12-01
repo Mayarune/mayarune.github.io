@@ -8,7 +8,7 @@
 
   /* Dark mode colors */
   --dark-a: #0f3d0f;  /* dark green */
-  --dark-b: #8b0000;  /* dark red */
+  --dark-b: #8b0044;  /* dark pink */
 
   --text-light: #222;
   --text-dark: #eee;
@@ -38,7 +38,6 @@ body.dark { color: var(--text-dark); }
   backdrop-filter: blur(6px);
   cursor: pointer;
 }
-
 body.dark .nav-btn {
   background: rgba(0,0,0,0.6);
   color: var(--text-dark);
@@ -47,24 +46,23 @@ body.dark .nav-btn {
 /* Side nav */
 .sidenav {
   position: fixed;
-  top: 0;
-  left: 0;
+  top: 0; left: 0;
   height: 100%;
-  width: 0; /* hidden by default */
+  width: 260px;
+  transform: translateX(-100%);
   z-index: 1000;
   background: rgba(255,255,255,0.95);
   backdrop-filter: blur(8px);
-  overflow-x: hidden;
-  transition: width 0.3s ease;
+  transition: transform 0.3s ease;
   padding-top: 64px;
   font-family: var(--font-display);
+  border-right: 1px solid rgba(0,0,0,0.1);
 }
-
 body.dark .sidenav {
-  background: rgba(0,0,0,0.92);
+  background: rgba(15,61,15,0.9); /* dark green base */
+  border-right-color: rgba(139,0,68,0.6); /* dark pink accent */
 }
-
-.sidenav.open { width: 250px; }
+.sidenav.open { transform: translateX(0); }
 
 .sidenav a, .sidenav button {
   display: block;
@@ -77,7 +75,6 @@ body.dark .sidenav {
   text-align: left;
   cursor: pointer;
 }
-
 .sidenav a:hover, .sidenav button:hover {
   background: rgba(255,255,255,0.2);
 }
@@ -95,7 +92,4 @@ section {
   padding: 6rem 2rem 3rem;
   text-align: center;
 }
-
-h1, h2 {
-  font-family: var(--font-display);
-}
+h1, h2 { font-family: var(--font-display); }
