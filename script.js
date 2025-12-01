@@ -4,11 +4,9 @@ document.addEventListener("mousemove", (e) => {
   const y = (e.clientY / window.innerHeight) * 100;
 
   if (document.body.classList.contains("dark")) {
-    // Dark mode: dark green + dark red
     document.body.style.background =
       `radial-gradient(circle at ${x}% ${y}%, #0f3d0f, #8b0000)`;
   } else {
-    // Light mode: pastel green + pastel pink
     document.body.style.background =
       `radial-gradient(circle at ${x}% ${y}%, #c1f0c1, #f7c6d9)`;
   }
@@ -17,4 +15,13 @@ document.addEventListener("mousemove", (e) => {
 // Dark mode toggle
 function toggleDarkMode() {
   document.body.classList.toggle("dark");
+}
+
+// Side nav controls
+function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+}
+
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
 }
