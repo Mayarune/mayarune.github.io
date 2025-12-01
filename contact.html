@@ -3,18 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <title>Contact & Socials</title>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Orbitron:wght@600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <nav>
+  <span class="nav-btn" onclick="openNav()">☰ Menu</span>
+
+  <div id="mySidenav" class="sidenav">
+    <span class="closebtn" onclick="closeNav()">&times;</span>
     <a href="index.html">Home</a>
     <a href="blogs.html">Blogs</a>
     <a href="contact.html">Contact & Socials</a>
-  </nav>
-  <button class="toggle" onclick="toggleDarkMode()">Toggle Mode</button>
+    <a href="projects.html">Projects</a>
+    <a href="#" onclick="toggleDarkMode()">Toggle Theme</a>
+  </div>
 
   <section>
-    <h1>Contact & Socials</h1>
+    <h1 style="font-family:'Orbitron',sans-serif;">Contact & Socials</h1>
     <p>Get in Touch: Reach out via the form below or connect with me on social platforms.</p>
 
     <form>
@@ -23,12 +28,6 @@
       <textarea placeholder="Your Message"></textarea>
       <button type="submit">Send</button>
     </form>
-
-    <div class="socials">
-      <a href="https://twitter.com/yourhandle">Twitter</a>
-      <a href="https://github.com/yourhandle">GitHub</a>
-      <a href="https://linkedin.com/in/yourhandle">LinkedIn</a>
-    </div>
   </section>
 
   <script src="script.js"></script>
