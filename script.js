@@ -4,11 +4,13 @@ document.addEventListener("mousemove", (e) => {
   const y = (e.clientY / window.innerHeight) * 100;
 
   if (document.body.classList.contains("dark")) {
+    // Dark mode: dark green + dark red
     document.body.style.background =
-      `radial-gradient(circle at ${x}% ${y}%, #0f3d0f, #1a1a1a)`;
+      `radial-gradient(circle at ${x}% ${y}%, #0f3d0f, #8b0000)`;
   } else {
+    // Light mode: pastel green + pastel pink
     document.body.style.background =
-      `radial-gradient(circle at ${x}% ${y}%, #c1f0c1, #d8b4e2)`;
+      `radial-gradient(circle at ${x}% ${y}%, #c1f0c1, #f7c6d9)`;
   }
 });
 
