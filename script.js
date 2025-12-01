@@ -1,8 +1,6 @@
 // Theme colors
-const LIGHT_A = '#c1f0c1';
-const LIGHT_B = '#f7c6d9';
-const DARK_A  = '#0f3d0f';
-const DARK_B  = '#8b0000';
+const LIGHT_A = '#c1f0c1', LIGHT_B = '#f7c6d9';
+const DARK_A  = '#0f3d0f', DARK_B  = '#8b0044'; // dark green + dark pink
 
 // Restore theme
 (function initTheme() {
@@ -10,36 +8,40 @@ const DARK_B  = '#8b0000';
   if (saved === 'dark') document.body.classList.add('dark');
 })();
 
-// Mouse-follow gradient
-let rafId = null;
-let lastX = 50, lastY = 50;
+// Mouse-follow gradient with smooth drift
+let targetX = 50, targetY = 50;
+let currentX = 50, currentY = 50;
+let t = 0;
 
 function applyGradient(xPct, yPct) {
-  const isDark = document.body.classList.contains('dark');
-  const a = isDark ? DARK_A : LIGHT_A;
-  const b = isDark ? DARK_B : LIGHT_B;
+  const dark = document.body.classList.contains('dark');
+  const a = dark ? DARK_A : LIGHT_A;
+  const b = dark ? DARK_B : LIGHT_B;
   document.body.style.background = `radial-gradient(circle at ${xPct}% ${yPct}%, ${a}, ${b})`;
 }
 
 document.addEventListener('mousemove', (e) => {
-  lastX = (e.clientX / window.innerWidth) * 100;
-  lastY = (e.clientY / window.innerHeight) * 100;
-  if (rafId) return;
-  rafId = requestAnimationFrame(() => {
-    applyGradient(lastX, lastY);
-    rafId = null;
-  });
+  targetX = (e.clientX / window.innerWidth) * 100;
+  targetY = (e.clientY / window.innerHeight) * 100;
 });
 
-// Initial gradient
-window.addEventListener('DOMContentLoaded', () => applyGradient(lastX, lastY));
+function animate() {
+  t += 0.02;
+  currentX += (targetX - currentX) * 0.05;
+  currentY += (targetY - currentY) * 0.05;
+  const driftX = Math.sin(t) * 3;
+  const driftY = Math.cos(t * 0.8) * 3;
+  applyGradient(currentX + driftX, currentY + driftY);
+  requestAnimationFrame(animate);
+}
+animate();
 
 // Theme toggle
 function toggleDarkMode() {
   document.body.classList.toggle('dark');
   localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
-  applyGradient(lastX, lastY);
 }
+window.toggleDarkMode = toggleDarkMode;
 
 // Side nav controls
 function openNav() {
@@ -48,8 +50,5 @@ function openNav() {
 function closeNav() {
   document.getElementById('mySidenav').classList.remove('open');
 }
-
-// Expose for inline handlers
-window.toggleDarkMode = toggleDarkMode;
 window.openNav = openNav;
 window.closeNav = closeNav;
