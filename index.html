@@ -3,19 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <title>Home</title>
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Orbitron:wght@600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <nav>
+  <span class="nav-btn" onclick="openNav()">☰ Menu</span>
+
+  <div id="mySidenav" class="sidenav">
+    <span class="closebtn" onclick="closeNav()">&times;</span>
     <a href="index.html">Home</a>
     <a href="blogs.html">Blogs</a>
     <a href="contact.html">Contact & Socials</a>
-  </nav>
-  <button class="toggle" onclick="toggleDarkMode()">Toggle Mode</button>
+    <a href="projects.html">Projects</a>
+    <a href="#" onclick="toggleDarkMode()">Toggle Theme</a>
+  </div>
 
   <section>
-    <h1>Home</h1>
+    <h1 style="font-family:'Orbitron',sans-serif;">Home</h1>
     <p>About Me: This is where you introduce yourself, share your background, and what inspires your work.</p>
   </section>
 
