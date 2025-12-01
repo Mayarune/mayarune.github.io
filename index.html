@@ -2,28 +2,178 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Home</title>
+  <title>Side nav + mouse gradient</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Orbitron:wght@600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    :root {
+      --font-display: 'Orbitron', sans-serif;
+      --font-body: 'Open Sans', sans-serif;
+      --light-a: #c1f0c1; /* pastel green */
+      --light-b: #f7c6d9; /* pastel pink */
+      --dark-a: #0f3d0f;  /* dark green */
+      --dark-b: #8b0000;  /* dark red */
+      --text-light: #222;
+      --text-dark: #eee;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: var(--font-body);
+      color: var(--text-light);
+      transition: color 0.25s ease;
+      overflow: hidden; /* prevent layout shifts */
+    }
+    body.dark { color: var(--text-dark); }
+
+    /* Hamburger button */
+    .nav-btn {
+      position: fixed;
+      top: 16px;
+      left: 20px;
+      z-index: 1001;
+      font-family: var(--font-display);
+      font-size: 18px;
+      padding: 8px 10px;
+      border: none;
+      background: rgba(255,255,255,0.75);
+      backdrop-filter: blur(6px);
+      cursor: pointer;
+    }
+    body.dark .nav-btn {
+      background: rgba(0,0,0,0.6);
+      color: var(--text-dark);
+    }
+
+    /* Side nav uses transform (smoother than width) */
+    .sidenav {
+      position: fixed;
+      top: 0; left: 0;
+      height: 100%;
+      width: 260px;
+      transform: translateX(-100%);
+      z-index: 1000;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(8px);
+      transition: transform 0.3s ease;
+      padding-top: 64px;
+      font-family: var(--font-display);
+      border-right: 1px solid rgba(0,0,0,0.1);
+    }
+    body.dark .sidenav {
+      background: rgba(0,0,0,0.92);
+      border-right-color: rgba(255,255,255,0.2);
+    }
+    .sidenav.open { transform: translateX(0); }
+
+    .sidenav a, .sidenav button {
+      display: block;
+      padding: 14px 24px;
+      text-decoration: none;
+      font-size: 18px;
+      color: inherit;
+      background: transparent;
+      border: 0;
+      text-align: left;
+      cursor: pointer;
+    }
+    .sidenav a:hover, .sidenav button:hover {
+      background: rgba(255,255,255,0.2);
+    }
+
+    .closebtn {
+      position: absolute;
+      top: 14px;
+      right: 16px;
+      font-size: 28px;
+      cursor: pointer;
+    }
+
+    /* Content */
+    section {
+      position: relative;
+      padding: 6rem 2rem 3rem;
+      text-align: center;
+    }
+    h1, h2 { font-family: var(--font-display); }
+
+    /* Ensure content sits above gradient */
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+  </style>
 </head>
 <body>
   <button class="nav-btn" onclick="openNav()">☰ Menu</button>
 
-  <nav id="mySidenav" class="sidenav">
+  <nav id="mySidenav" class="sidenav" aria-label="Side navigation">
     <span class="closebtn" onclick="closeNav()">&times;</span>
-    <a href="index.html">Home</a>
-    <a href="blogs.html">Blogs</a>
-    <a href="contact.html">Contact</a>
-    <a href="projects.html">Projects</a>
+    <a href="#">Home</a>
+    <a href="#">Blogs</a>
+    <a href="#">Contact</a>
+    <a href="#">Projects</a>
     <button onclick="toggleDarkMode()">Toggle Theme</button>
   </nav>
 
-  <section>
+  <section class="content">
     <h1>Home</h1>
     <p>About Me: This is where you introduce yourself, share your background, and what inspires your work.</p>
   </section>
 
-  <script src="script.js"></script>
+  <script>
+    // Theme persistence
+    (function initTheme() {
+      const saved = localStorage.getItem('theme');
+      if (saved === 'dark') document.body.classList.add('dark');
+    })();
+
+    // Mouse-follow gradient
+    const LIGHT_A = '#c1f0c1', LIGHT_B = '#f7c6d9';
+    const DARK_A  = '#0f3d0f', DARK_B  = '#8b0000';
+    let rafId = null, lastX = 50, lastY = 50;
+
+    function applyGradient(xPct, yPct) {
+      const dark = document.body.classList.contains('dark');
+      const a = dark ? DARK_A : LIGHT_A;
+      const b = dark ? DARK_B : LIGHT_B;
+      document.body.style.background = `radial-gradient(circle at ${xPct}% ${yPct}%, ${a}, ${b})`;
+    }
+
+    document.addEventListener('mousemove', (e) => {
+      lastX = (e.clientX / window.innerWidth) * 100;
+      lastY = (e.clientY / window.innerHeight) * 100;
+      if (rafId) return;
+      rafId = requestAnimationFrame(() => {
+        applyGradient(lastX, lastY);
+        rafId = null;
+      });
+    });
+
+    window.addEventListener('DOMContentLoaded', () => applyGradient(lastX, lastY));
+
+    // Theme toggle
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark');
+      localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+      applyGradient(lastX, lastY);
+    }
+
+    // Side nav controls
+    function openNav() {
+      document.getElementById('mySidenav').classList.add('open');
+    }
+    function closeNav() {
+      document.getElementById('mySidenav').classList.remove('open');
+    }
+
+    // Expose for inline handlers
+    window.toggleDarkMode = toggleDarkMode;
+    window.openNav = openNav;
+    window.closeNav = closeNav;
+  </script>
 </body>
 </html>
