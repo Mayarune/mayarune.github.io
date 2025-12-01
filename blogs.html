@@ -1,34 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Blogs</title>
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Orbitron:wght@600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Orbitron:wght@600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <span class="nav-btn" onclick="openNav()">☰ Menu</span>
+  <button class="nav-btn" onclick="openNav()">☰ Menu</button>
 
-  <div id="mySidenav" class="sidenav">
+  <nav id="mySidenav" class="sidenav" aria-label="Side navigation">
     <span class="closebtn" onclick="closeNav()">&times;</span>
     <a href="index.html">Home</a>
     <a href="blogs.html">Blogs</a>
-    <a href="contact.html">Contact & Socials</a>
+    <a href="contact.html">Contact</a>
     <a href="projects.html">Projects</a>
-    <a href="#" onclick="toggleDarkMode()">Toggle Theme</a>
-  </div>
+    <button onclick="toggleDarkMode()">Toggle theme</button>
+  </nav>
 
   <section>
-    <h1 style="font-family:'Orbitron',sans-serif;">Blogs</h1>
-    <p>My Writing: Here you’ll find posts, thoughts, and updates about projects, ideas, and experiences.</p>
+    <h1>Blogs</h1>
+    <p>My writing: posts, thoughts, and project updates.</p>
 
     <article>
       <h2>First Post</h2>
-      <p>A short intro to my blog content...</p>
+      <p>A short intro to the blog content…</p>
     </article>
     <article>
       <h2>Second Post</h2>
-      <p>Another entry with insights...</p>
+      <p>Another entry with insights…</p>
     </article>
   </section>
 
